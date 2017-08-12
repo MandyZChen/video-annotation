@@ -1,0 +1,4 @@
+#!/bin/bash
+FEATHERS_PATH=/home/panda/Documents/feathers
+
+${FEATHERS_PATH}/node_modules/.bin/webpack ${FEATHERS_PATH}/public/src/index.js ${FEATHERS_PATH}/public/bundle.js --watch "$@"

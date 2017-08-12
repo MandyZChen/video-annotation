@@ -1,0 +1,107 @@
+<html>
+  <head>
+    <title>Video Annotation Project</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html, body {
+        font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
+        font-weight: 400;
+        font-size: 16px;
+        color: #333;
+      }
+
+      .center-text {
+        text-align: center;
+      }
+
+      main {
+        margin-top: 100px;
+        padding: 20px;
+      }
+
+      img.logo {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+        margin-bottom: 30px;
+      }
+
+      h2 {
+        font-size: 2em;
+        font-weight: 100;
+      }
+
+      footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 20px;
+      }
+
+      footer p {
+        font-weight: 300;
+        font-size: 1.0em;
+      }
+
+      a {
+        color: #31D8A0;
+        text-decoration: none;
+      }
+
+      a:hover,
+      a:focus {
+        color: #31D8A0;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <!-- Consent form page-->
+      <div id="consent" class="page">
+        <h3><u>Consent Form</u></h3>
+        <iframe frameborder="0" id="consentForm" src="https://drive.google.com/file/d/0B5bko2nl_K0QcUw0c1JTSEJ3MG8/preview"></iframe><br />
+        <input name="consent" onclick="disableStart(false)" type="radio" value="yes" />I agree<br />
+        <input name="consent" onclick="disableStart(true)" type="radio" value="no" />I don&#39;t agree<br />
+        <p class="spaceText"> Click 'I agree' then click 'Start' to begin. </p>
+        <button disabled id="agreeAndStart" type="button" style="outline:none" >Start</button>
+      </div>
+
+
+      <div id="instructions" class="page">
+          <h3><u>Instructions</u></h3>
+          <p class="spaceText"> You will be asked to watch driving videos and annotate what actions that the driver took and why the action was taken. </p>
+          <p class="spaceText"> <b>GOOGLE CHROME IS REQUIRED.</b> The experiment may not work with other browsers.</p>
+          <p class="spaceText">The entire experiment should take about 60 minutes in total.</p>
+          <p class="spaceText">During the entire experiment you need to:</p>
+          <ul>
+            <li>Pay attention and keep pace with the video. The position of your mouse during the experiment will be automatically recorded every second. <b>You don't need to click anything for giving responses.</b> </li>
+            <li><b>If you leave the web page, the experiment will end. </b> You can resume the experiment simply by selecting the <b>'resume progress'</b> option on the participant information page, and put in the first and last name that you entered before. You will need to select the <b>'First time participating'</b> option if you have not finished any trial. Please do finish the whole experiment within <b>24 hours</b> after you signed up.</li>
+            <li>If the web page or the video <b> does not response </b> in the middle of the experiment, click on it for several times so that your browser can focus on the web page again.</li>
+            <li><b>You can receive full credits only if you complete the whole experiment.</b> </li>
+          </ul>
+          <p class="spaceText"> If the experiment took you more than 60 minutes or you encountered any problem, please do email the researcher at <b>mandy_chen@berkeley.edu</b>. We appreciate your feedback! </p>
+          <p class="spaceText"> </p>
+          <p class="spaceText"> Click 'Next' to view the next page. </p>
+          <!-- Navigation buttons -->
+          <button id="previous" type="button" style="outline:none">Previous</button>
+          <button id="next" type="button" style="outline:none">Next</button>
+      </div>
+
+
+      <div id="annotation" class="page">
+        <h3>Video Annotation</h3>
+        <div id='yt-player'></div>
+      </div>
+
+    </main>
+  </body>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/core-js/2.1.4/core.min.js"></script>
+  <script type="text/javascript" src="bundle.js"></script>
+
+</html>
