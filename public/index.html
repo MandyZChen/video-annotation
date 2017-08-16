@@ -1,102 +1,170 @@
 <html>
   <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <title>Video Annotation Project</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+    <style type="text/css" media="screen">
+      #consent #consentForm {
+        width: 100%;
+        height: 80%;
+        resize: both;
+        overflow: auto;
+        margin-top: 5px;
       }
-
-      html, body {
-        font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
-        font-weight: 400;
-        font-size: 16px;
-        color: #333;
-      }
-
-      .center-text {
-        text-align: center;
-      }
-
-      main {
-        margin-top: 100px;
-        padding: 20px;
-      }
-
-      img.logo {
-        display: block;
-        margin: 0 auto;
-        max-width: 100%;
-        margin-bottom: 30px;
-      }
-
-      h2 {
-        font-size: 2em;
-        font-weight: 100;
-      }
-
-      footer {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 20px;
-      }
-
-      footer p {
-        font-weight: 300;
-        font-size: 1.0em;
-      }
-
-      a {
-        color: #31D8A0;
-        text-decoration: none;
-      }
-
-      a:hover,
-      a:focus {
-        color: #31D8A0;
-      }
+      .bottom-buffer { margin-bottom:10px; }
+      .top-buffer { margin-top:10px; }
     </style>
   </head>
   <body>
     <main class="container">
+      
       <!-- Consent form page-->
-      <div id="consent" class="page">
-        <h3><u>Consent Form</u></h3>
-        <iframe frameborder="0" id="consentForm" src="https://drive.google.com/file/d/0B5bko2nl_K0QcUw0c1JTSEJ3MG8/preview"></iframe><br />
-        <input name="consent" onclick="disableStart(false)" type="radio" value="yes" />I agree<br />
-        <input name="consent" onclick="disableStart(true)" type="radio" value="no" />I don&#39;t agree<br />
-        <p class="spaceText"> Click 'I agree' then click 'Start' to begin. </p>
-        <button disabled id="agreeAndStart" type="button" style="outline:none" >Start</button>
+      <div id="consent" class="page container">
+
+        <div class='row bottom-buffer col-md-12'>
+          <h3><u>Consent Form</u></h3>
+          <input name="consent" onclick="Entrypoint.disableStart(false)" type="radio" value="yes" /> I agree<br />
+          <input name="consent" onclick="Entrypoint.disableStart(true)" type="radio" value="no" /> I don&#39;t agree<br />
+          <p class="spaceText"> Click 'I agree' then click 'Start' to begin. </p>
+          <button disabled type="button" id="agreeAndStart" onclick="Entrypoint.showPage(1)" type="button" class="btn btn-lg btn-primary">Start</button>
+        </div>
+        <div class='row bottom-buffer col-md-12'>
+          <iframe frameborder="0" id="consentForm" src="https://docs.google.com/document/d/1JXYorhDq0hhs4Z3Up8RtdBycP3XihQxEt180mNid978/pub?embedded=true"></iframe>
+        </div>
       </div>
 
-
-      <div id="instructions" class="page">
-          <h3><u>Instructions</u></h3>
-          <p class="spaceText"> You will be asked to watch driving videos and annotate what actions that the driver took and why the action was taken. </p>
-          <p class="spaceText"> <b>GOOGLE CHROME IS REQUIRED.</b> The experiment may not work with other browsers.</p>
-          <p class="spaceText">The entire experiment should take about 60 minutes in total.</p>
-          <p class="spaceText">During the entire experiment you need to:</p>
+      <div id="before_start" class="page container">
+          <!-- Starting page -->
+          <h3><u>Before You Start</u></h3>
+          <p class="spaceText"> Welcome! I am a graduate student in Prof. David Whitney's laboratory. The purpose of this experiment is to use human intelligence to improve state-of-the-art autonomous driving algorithms. During this 60 minutes, you will be asked to watch driving videos and annotate what actions that the driver took and why the driver decided to take that action. You valuable input will be used to train the algorithm so you are basically teaching the machine how to drive! :)</p>
+          <p class="spaceText"> <b>GOOGLE CHROME IS REQUIRED.</b> The experiment may not work with other browsers.</p><br />
+          <h4>Please read the following instructions carefully: </h4>
           <ul>
-            <li>Pay attention and keep pace with the video. The position of your mouse during the experiment will be automatically recorded every second. <b>You don't need to click anything for giving responses.</b> </li>
-            <li><b>If you leave the web page, the experiment will end. </b> You can resume the experiment simply by selecting the <b>'resume progress'</b> option on the participant information page, and put in the first and last name that you entered before. You will need to select the <b>'First time participating'</b> option if you have not finished any trial. Please do finish the whole experiment within <b>24 hours</b> after you signed up.</li>
-            <li>If the web page or the video <b> does not response </b> in the middle of the experiment, click on it for several times so that your browser can focus on the web page again.</li>
-            <li><b>You can receive full credits only if you complete the whole experiment.</b> </li>
-          </ul>
-          <p class="spaceText"> If the experiment took you more than 60 minutes or you encountered any problem, please do email the researcher at <b>mandy_chen@berkeley.edu</b>. We appreciate your feedback! </p>
-          <p class="spaceText"> </p>
+            <li>Please pay full attention to the experiment. The quality of the data is very important to us. Pleaes don't use your cellphone or try to multitask while doing the experiment. We keep track of the amount of time you are active on our experimental webpage. </li>
+            <li>Please do not close the web page before you finish the experiment. If you accidentally exit the experiment, you can resume the experiment by entering your Berkeley email, and then the program will load your progress and you can continue. </li>
+            <li>Please do finish the whole experiment within <b>24 hours</b> after you signed up.</li>
+            <li>You can receive full credits only if you complete the whole experiment.</li>
+          </ul><br />
+          <p class="spaceText"> If you encountered any problem or have any suggestion, please email the researcher at <b>mandy_chen@berkeley.edu</b>. We appreciate your feedback! </p>
           <p class="spaceText"> Click 'Next' to view the next page. </p>
+
           <!-- Navigation buttons -->
-          <button id="previous" type="button" style="outline:none">Previous</button>
-          <button id="next" type="button" style="outline:none">Next</button>
+          <button id="next" type="button" onclick="Entrypoint.showPage(2)" class="btn btn-lg btn-primary">Next</button>
       </div>
 
+      <div id="getInfo" class="page container">
+        <div class='row bottom-buffer'>
+          <h3><u> Participant Information </u></h3>
+          <p>Please enter your Berkeley email as username. Please double check if your email address is correct before you submit. We use it for the purpose of granting RPP credits and saving progress.</p>
+        </div>
+        
+        <form id='infoForm'>
+          <div id="email" class="formField row bottom-buffer">
+            <span class="formLabel" >Berkeley Email:</span>
+            <input type="text" name="email" size="50">
+          </div>
+          <div class="formField row bottom-buffer">
+            <span class="formLabel">Age:</span>
+            <input type="text" name="age">
+          </div>
+          <div class="formField row bottom-buffer">
+            <span class="formLabel">Gender:</span>
+            <select name="gender" ><option value=""></option><option value="0">Male</option><option value="1">Female</option> <option value="2">Other</option> </select>
+          </div>
+          <div class="formField row bottom-buffer">
+            <span class="formLabel">Driver license ID:</span>
+            <input type="text" name="driverID">
+          </div>
+          <div class="formField row bottom-buffer">
+            <span class="formLabel">Years of driving experience:</span>
+            <input type="text" name="yearsDrive">
+          </div>
+        </form>
+        <div class="row bottom-buffer">
+          <p id = "formText"> Please enter your Driver license ID and confirm that you have at least a year of driving experience. If not, you are not qualified to participate in this experiment and you should sign up for another one (sorry!). Please note that your information is handled as absolutely confedential. </p>
+        </div>
+        <button id="submitForm" type="button" class="btn btn-lg btn-primary">Submit</button>
 
-      <div id="annotation" class="page">
-        <h3>Video Annotation</h3>
-        <div id='yt-player'></div>
+      </div>
+
+      <div id="instructions" class="page container">
+       <!-- Instruction page (show a video instead) -->
+        <h3><u>Instructions</u></h3>
+        <p class="spaceText"> Please watch the following video.</p>
+        <p class="spaceText"> Click 'Begin' to begin annotating the first video. </p> 
+        <button id="begin" type="button" onclick="Entrypoint.showPage(4)" class="btn btn-lg btn-primary">Begin</button>
+      </div>
+
+      <div id="annotation" class="page container">
+        <h3><u>Trial</u></h3>
+        <div id='yt-player' class='col-md-8'></div>
+        <!-- <div hidden id='yt-player-replay'></div> -->
+        <div id='entryBox' class='row bottom-buffer col-md-4'>
+          <form id='entryForm'>
+            <div class="formField row bottom-buffer">
+              <div class='col-md-6'>
+                <span class="formLabel">Start Time:</span>
+                <input id='startInput' class='timeInput' type="text" name="startTime" size = "10">
+              </div>
+              <div class='col-md-6'>
+                <button id="recordStart" type="button" class="btn btn-info">Record Start Time</button>
+              </div>
+            </div>
+
+            <div class="formField row bottom-buffer">
+              <div class='col-md-6'>
+                <span class="formLabel">End Time:</span>
+                <input id='endInput' class='timeInput' type="text" name="endTime" size = "10">
+              </div>
+              <div class='col-md-6'>  
+                <button id="recordEnd" type="button" class="btn btn-info">Record End Time</button>
+              </div>
+            </div>
+
+            <div class="formField row bottom-buffer">
+              <div class='col-md-6'>
+                <span class="formLabel" >Action:</span>
+                <select id='action' name="action">
+                  <option value="none"></option>
+                  <option value="accelerate">Accelerate</option>
+                  <option value="brake">Brake</option>
+                  <option value="coast">Coast</option>
+                  <option value="leftTurn">Left Turn</option>
+                  <option value="rightTurn">Right Turn</option>
+                  <option value="mergeLeft">Merge Left</option>
+                  <option value="mergeRight">Merge Right</option>
+                  <option value="uTurn">U Turn</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class='col-md-6'>
+                <input hidden id='otherAction' type="text" name="otherAction" placeholder='other'>
+              </div>
+            </div>
+
+            <div class="formField row bottom-buffer col-md-12">
+              <span class="formLabel">Why:</span>
+              <textarea id="why" type="text" name="why" rows="6" cols="45" wrap="soft"></textarea>
+            </div>
+          </form>
+          <div class='row bottom-buffer'> 
+            <div class='col-md-6'>
+              <button id="addEntry" type="button" class="btn btn-success">Add Entry</button>
+            </div>
+            <div class='col-md-6'>
+              <button id="deleteEntry" type="button" class="btn btn-danger">Delete last Entry</button>
+            </div>
+          </div>
+        </div>
+        <div id='historyBox' class='row bottom-buffer col-md-4'>
+          <h3><u>History:</u></h3>
+          <ol id='historyList'>
+          </ol>
+          <button id="submitTrial" type="button" class="btn btn-primary btn-lg">Submit this Trial</button>
+        </div>
+
       </div>
 
     </main>
