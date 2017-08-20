@@ -30671,27 +30671,62 @@ const util = __webpack_require__(84);
 const restClient = rest();
 const app = feathers().configure(restClient.jquery($));
 const db = app.service('/db');
+const playlist = app.service('/playlist');
+
+const MAX_TRIALS = 30;
+
+function getPlaylist(id, params) {
+  return playlist.get(id, params).then(function(message) {
+    console.log(message);
+    return message;
+  }).catch(function(err) {
+    console.error(err);
+    throw err;
+  });
+}
 
 var player = new YTPlayer('#yt-player', {
   width: 800,
   height: 600,
-  playerVars: {
-    listType: 'playlist',
-    list: 'PLm09SE4GxfvWi5dKXkCoXdtJstAgvNHp3',
-  },
+  related: false,
+  info: false,
+  modestBranding: true,
 });
 
 const trialEntries = [];
-var user;
+var user = {
+  info: {},
+  trials: [],
+  trialVideos: [],
+  currentTrial: 0,
+};
+
+function beginTrial() {
+  const currentTrial = user.currentTrial;
+  $('#trialNumber').text(currentTrial + 1);
+  const videoId = _.get(user.trialVideos[currentTrial], 'snippet.resourceId.videoId');
+  if (!videoId) {
+    window.alert('Could not load video!');
+    return;
+  }
+  player.load(videoId);
+  showPage(4);
+}
 
 $(document).ready(function() {
   preventNavigation();
   showPage(0);
 
   registerHandlers();
-
-  player.load('wet833J5OYU');
   infoFormHandler();
+
+  getPlaylist('PLm09SE4GxfvWi5dKXkCoXdtJstAgvNHp3', {
+    query: {
+      maxResults: MAX_TRIALS,
+    }
+  }).then(message => {
+    Array.prototype.push.apply(user.trialVideos, message.results);
+  });
 });
 
 function registerHandlers() {
@@ -30702,6 +30737,7 @@ function registerHandlers() {
   $('#deleteEntry').click(deleteEntry);
   $('#submitTrial').click(submitTrial);
   $('#submitTrial').hide();
+  $('#begin').click(beginTrial);
 }
 
 function showOtherAction() {
@@ -30787,14 +30823,14 @@ function recordEntry() {
 
   // End time must be larger than start time
   if (entry.endTime<=entry.startTime){
-    alert('End time must be later than start time!');
+    window.alert('End time must be later than start time!');
     return;
   } 
 
   // Alert if not all fields present
   const allPresent = _.every(_.values(entry), e => e.length);
   if (!allPresent) {
-    alert('Please Fill in All Fields');
+    window.alert('Please Fill in All Fields');
     return;
   }
 
@@ -30821,17 +30857,28 @@ function deleteEntry(){
 
 function submitTrial(){
   user.trials.push(trialEntries);
+  user.currentTrial += 1;
+  console.warn(user);
   updateEntry(user);
+
+  $('#historyList').empty();
+
+  if (user.currentTrial === MAX_TRIALS) {
+    // User is finished
+  } else {
+    beginTrial();
+  }
 }
 
 
 function createUser() {
   // Get all the forms elements and their values in one step
   var values = $("#infoForm").serializeArray();
-  user = {
-    info: {},
-    trials: [],
-  };
+
+  if (!user.trialVideos.length) {
+    window.alert('Playlist could not be loaded');
+    return;
+  }
 
   var allPresent = [];
   _.each(values, function(val) {
@@ -30966,6 +31013,7 @@ module.exports = {
   $: $,
   getPlayerTime: getPlayerTime,
   trialEntries: trialEntries,
+  user: user,
 }
 
 /***/ }),

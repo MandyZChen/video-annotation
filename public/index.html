@@ -28,7 +28,7 @@
           <input name="consent" onclick="Entrypoint.disableStart(false)" type="radio" value="yes" /> I agree<br />
           <input name="consent" onclick="Entrypoint.disableStart(true)" type="radio" value="no" /> I don&#39;t agree<br />
           <p class="spaceText"> Click 'I agree' then click 'Start' to begin. </p>
-          <button disabled type="button" id="agreeAndStart" onclick="Entrypoint.showPage(1)" type="button" class="btn btn-lg btn-primary">Start</button>
+          <button disabled type="button" id="agreeAndStart" onclick="Entrypoint.showPage(1)" class="btn btn-lg btn-primary">Start</button>
         </div>
         <div class='row bottom-buffer col-md-12'>
           <iframe frameborder="0" id="consentForm" src="https://docs.google.com/document/d/1JXYorhDq0hhs4Z3Up8RtdBycP3XihQxEt180mNid978/pub?embedded=true"></iframe>
@@ -94,13 +94,12 @@
         <h3><u>Instructions</u></h3>
         <p class="spaceText"> Please watch the following video.</p>
         <p class="spaceText"> Click 'Begin' to begin annotating the first video. </p> 
-        <button id="begin" type="button" onclick="Entrypoint.showPage(4)" class="btn btn-lg btn-primary">Begin</button>
+        <button id="begin" type="button" class="btn btn-lg btn-primary">Begin</button>
       </div>
 
       <div id="annotation" class="page container">
-        <h3><u>Trial</u></h3>
-        <div id='yt-player' class='col-md-8'></div>
-        <!-- <div hidden id='yt-player-replay'></div> -->
+        <h3>Trial <span id='trialNumber'></span></h3>
+        <div id='yt-player' class='col-md-8'></div>       
         <div id='entryBox' class='row bottom-buffer col-md-4'>
           <form id='entryForm'>
             <div class="formField row bottom-buffer">
