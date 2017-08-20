@@ -1,4 +1,4 @@
 {
-  "host": "video-annotation-app.feathersjs.com",
+  "host": "berkeley-video-annotation.herokuapp.com",
   "port": "PORT"
 }
