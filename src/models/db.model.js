@@ -7,6 +7,6 @@ module.exports = function (app) {
     filename: path.join(dbPath, 'db.db'),
     autoload: true
   });
-
+  console.warn('loading DB at ' + path.join(dbPath, 'db.db'));
   return Model;
 };

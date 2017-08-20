@@ -15,9 +15,7 @@ class Service {
   get (id, params) {
     params = params.query;
     var videos = [];
-
-
-
+    
     return new Promise(function(resolve, reject) {
       function getPlaylist(pageToken) {
         youtube.playlistItems.list({
@@ -30,7 +28,6 @@ class Service {
           if (err) {
             reject(err);
           } else {
-            console.log(results);
             videos = videos.concat(results.items);
             if (results.nextPageToken) {
               getPlaylist(results.nextPageToken);
