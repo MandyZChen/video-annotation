@@ -1,6 +1,5 @@
 const feathers = require('feathers/client');
 const rest = require('feathers-rest/client');
-const service = require('feathers-nedb');
 const $ = require("jquery");
 const YTPlayer = require('yt-player');
 const _ = require('lodash');
@@ -9,8 +8,8 @@ const moment = require('moment');
 const util = require('util');
 const restClient = rest();
 const app = feathers().configure(restClient.jquery($));
-const db = app.service('/db');
 const playlist = app.service('/playlist');
+const db = app.service('/mongo');
 
 const MAX_TRIALS = 30;
 

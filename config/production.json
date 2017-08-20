@@ -1,5 +1,4 @@
 {
   "host": "berkeley-video-annotation.herokuapp.com",
   "port": "PORT",
-  "nedb": "../data"
 }
