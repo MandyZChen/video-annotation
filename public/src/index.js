@@ -11,7 +11,7 @@ const app = feathers().configure(restClient.jquery($));
 const playlist = app.service('/playlist');
 const db = app.service('/mongo');
 
-const MAX_TRIALS = 1;
+const MAX_TRIALS = 3;
 
 function getPlaylist(id, params) {
   return playlist.get(id, params).then(function(message) {
