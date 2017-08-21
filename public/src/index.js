@@ -11,7 +11,7 @@ const app = feathers().configure(restClient.jquery($));
 const playlist = app.service('/playlist');
 const db = app.service('/mongo');
 
-const MAX_TRIALS = 30;
+const MAX_TRIALS = 1;
 
 function getPlaylist(id, params) {
   return playlist.get(id, params).then(function(message) {
@@ -42,6 +42,7 @@ var user = {
 function beginTrial() {
   const currentTrial = user.currentTrial;
   $('#trialNumber').text(currentTrial + 1);
+  $('#totalNumber').text(MAX_TRIALS);
   const videoId = _.get(user.trialVideos[currentTrial], 'videoId');
   if (!videoId) {
     window.alert('Could not load video!');
@@ -200,9 +201,9 @@ function submitTrial(){
   updateEntry(user);
 
   $('#historyList').empty();
-
+  $('#submitTrial').hide();
   if (user.currentTrial === MAX_TRIALS) {
-    // User is finished
+    showPage(5);
   } else {
     beginTrial();
   }
