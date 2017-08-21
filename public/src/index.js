@@ -42,7 +42,7 @@ var user = {
 function beginTrial() {
   const currentTrial = user.currentTrial;
   $('#trialNumber').text(currentTrial + 1);
-  $('#totalNumber').text(MAX_TRIALS);
+  $('.totalNumber').text(MAX_TRIALS);
   const videoId = _.get(user.trialVideos[currentTrial], 'videoId');
   if (!videoId) {
     window.alert('Could not load video!');
@@ -55,7 +55,7 @@ function beginTrial() {
 $(document).ready(function() {
   preventNavigation();
   showPage(0);
-
+  $('.totalNumber').text(MAX_TRIALS);
   registerHandlers();
   infoFormHandler();
 
