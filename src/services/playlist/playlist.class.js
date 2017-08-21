@@ -15,7 +15,7 @@ class Service {
   get (id, params) {
     params = params.query;
     var videos = [];
-    
+
     return new Promise(function(resolve, reject) {
       function getPlaylist(pageToken) {
         youtube.playlistItems.list({
@@ -33,9 +33,12 @@ class Service {
               getPlaylist(results.nextPageToken);
             } else {
               const samples = _.sampleSize(videos, params.maxResults);
+              const results = _.map(samples, sample => {
+                return {videoId: sample.snippet.resourceId.videoId, title: sample.snippet.title};
+              });
               resolve({
                 id, 
-                results: samples,
+                results: results,
               });
             }
           }

@@ -18179,7 +18179,7 @@ var user = {
 function beginTrial() {
   const currentTrial = user.currentTrial;
   $('#trialNumber').text(currentTrial + 1);
-  const videoId = _.get(user.trialVideos[currentTrial], 'snippet.resourceId.videoId');
+  const videoId = _.get(user.trialVideos[currentTrial], 'videoId');
   if (!videoId) {
     window.alert('Could not load video!');
     return;
