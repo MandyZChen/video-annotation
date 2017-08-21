@@ -1,6 +1,8 @@
 # video-annotation
 
 > Video Annotation Website
+> Demo website link: https://berkeley-video-annotation.herokuapp.com/
+> Annotation_website_screen.png
 
 ## About
 
