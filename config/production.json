@@ -1,5 +1,6 @@
 {
   "host": "berkeley-video-annotation.herokuapp.com",
   "port": "PORT",
-  "mongodb": "MONGODB_URI"
+  "mongodb": "MONGODB_URI",
+  "apiKey": "API_KEY"
 }

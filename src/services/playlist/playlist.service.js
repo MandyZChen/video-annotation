@@ -8,6 +8,7 @@ module.exports = function () {
 
   const options = {
     name: 'playlist',
+    apiKey: app.get('apiKey'),
   };
 
   // Initialize our service with any options it requires

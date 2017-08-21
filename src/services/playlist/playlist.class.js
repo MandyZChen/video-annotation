@@ -15,11 +15,12 @@ class Service {
   get (id, params) {
     params = params.query;
     var videos = [];
-
+    const self = this;
     return new Promise(function(resolve, reject) {
       function getPlaylist(pageToken) {
+        console.warn(self.options.apiKey);
         youtube.playlistItems.list({
-          key: 'AIzaSyDEuWUTFbXnQItNJiviwMyg7Ize2_zKCKI',
+          key: self.options.apiKey,
           part: 'id,snippet',
           playlistId: id,
           maxResults: 50,
