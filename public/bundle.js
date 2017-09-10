@@ -17811,8 +17811,7 @@ const restClient = rest();
 const app = feathers().configure(restClient.jquery($));
 const playlist = app.service('/playlist');
 const db = app.service('/mongo');
-
-const MAX_TRIALS = 3;
+const MAX_TRIALS = 30;
 
 function getPlaylist(id, params) {
   return playlist.get(id, params).then(function(message) {
@@ -17830,15 +17829,24 @@ var player = new YTPlayer('#yt-player', {
   related: false,
   info: false,
   modestBranding: true,
+  autoplay: true
 });
 
-const trialEntries = [];
+// Trial start time
+let trialStart = 0;
+// Selected box coordinates and time
+let selectedBox;
+let trialEntries = [];
 var user = {
   info: {},
   trials: [],
+  durations: [],
   trialVideos: [],
   currentTrial: 0,
+  canvasSize: null,
 };
+// Canvas context
+let ctx;
 
 function beginTrial() {
   const currentTrial = user.currentTrial;
@@ -17850,7 +17858,63 @@ function beginTrial() {
     return;
   }
   player.load(videoId);
+  trialStart = Date.now(); //get start time of the trial
   showPage(4);
+}
+
+
+function clearCanvas() {
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  selectedBox = null;
+}
+function setupCanvas() {
+  const videoRatio = 16 / 9;  
+  const videoWidth = player._opts.width;
+  const videoHeight = player._opts.width / videoRatio;
+  const topMargin = Math.floor((player._opts.height - videoHeight) / 2);
+  $('#videoCanvas').css('top', topMargin);
+
+  const canvas = document.getElementById('videoCanvas');
+  canvas.height = videoHeight;
+  canvas.width = videoWidth;
+  user.canvasSize = [videoWidth, videoHeight];
+
+  ctx = canvas.getContext('2d');
+  let firstCoord;
+  let secondCoord;
+
+  ctx.strokeStyle = '#FF0000';
+
+  function getCursorPosition(event) {
+      const rect = canvas.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      return [x, y];
+  }
+
+  function mouseDown(event) {
+    clearCanvas();
+    firstCoord = getCursorPosition(event);
+  }
+  function mouseUp(event) {
+    secondCoord = getCursorPosition(event);
+    const topLeftX = _.min([firstCoord[0], secondCoord[0]]);
+    const topLeftY = _.min([firstCoord[1], secondCoord[1]]);
+    const recWidth = _.max([firstCoord[0], secondCoord[0]]) - topLeftX;
+    const recHeight = _.max([firstCoord[1], secondCoord[1]]) - topLeftY;
+
+    selectedBox = {
+      topLeftX: topLeftX,
+      topLeftY: topLeftY,
+      recWidth: recWidth,
+      recHeight: recHeight,
+      playerTime: player.getCurrentTime(),
+    };
+    ctx.strokeRect(topLeftX, topLeftY, recWidth, recHeight);
+  }
+
+  $('#videoCanvas').on('mousedown', mouseDown);
+  $('#videoCanvas').on('mouseup', mouseUp);
 }
 
 $(document).ready(function() {
@@ -17859,7 +17923,7 @@ $(document).ready(function() {
   $('.totalNumber').text(MAX_TRIALS);
   registerHandlers();
   infoFormHandler();
-
+  setupCanvas();
   getPlaylist('PLm09SE4GxfvWi5dKXkCoXdtJstAgvNHp3', {
     query: {
       maxResults: MAX_TRIALS,
@@ -17955,7 +18019,7 @@ function infoFormHandler() {
 function recordEntry() {
   var values = $('#entryForm').serializeArray();
   var entry = {};
-  
+
   // Create a entry
   _.each(values, val => {
     entry[val.name] = val.value;
@@ -17974,6 +18038,12 @@ function recordEntry() {
     return;
   }
 
+  if (!selectedBox || selectedBox.recWidth < 5) {
+      window.alert('Please Select a Video Area');
+      return;
+  }  
+  entry.selectedBox = selectedBox;
+
   // Add a summary to history
   var summary = util.format('%s - %s: %s', 
     entry.startTime, entry.endTime, entry.why);
@@ -17988,6 +18058,8 @@ function recordEntry() {
   if ($('#historyList').children().length>0){
     $('#submitTrial').show();
   }
+
+  clearCanvas();  
 }
 
 function deleteEntry(){
@@ -17997,10 +18069,11 @@ function deleteEntry(){
 
 function submitTrial(){
   user.trials.push(trialEntries);
+  user.durations.push((Date.now() - trialStart)/1000); // turn into miliseconds
   user.currentTrial += 1;
   console.warn(user);
   updateEntry(user);
-
+  trialEntries = [];
   $('#historyList').empty();
   $('#submitTrial').hide();
   if (user.currentTrial === MAX_TRIALS) {
@@ -18154,6 +18227,7 @@ module.exports = {
   getPlayerTime: getPlayerTime,
   trialEntries: trialEntries,
   user: user,
+  player: player,
 }
 
 /***/ }),

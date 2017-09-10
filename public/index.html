@@ -15,6 +15,17 @@
       }
       .bottom-buffer { margin-bottom:10px; }
       .top-buffer { margin-top:10px; }
+
+      #canvasContainer {
+        position: relative;
+      }
+      #videoCanvas{
+        position: absolute;
+        z-index: 1;
+        top:0;
+        left:0;
+      }
+
     </style>
   </head>
   <body>
@@ -101,25 +112,30 @@
 
       <div id="annotation" class="page container">
         <h3>Trial <span id='trialNumber'></span> out of <span class='totalNumber'> </span> in total</h3>
-        <div id='yt-player' class='col-md-8'></div>       
-        <div id='entryBox' class='row bottom-buffer col-md-4'>
+        <div id='videoContainer' class='col-md-9'>
+          <div id='canvasContainer'>
+            <div id='yt-player'></div>
+            <canvas id='videoCanvas'></canvas>  
+          </div>
+        </div>
+        <div id='entryBox' class='row bottom-buffer col-md-3'>
           <form id='entryForm'>
             <div class="formField row bottom-buffer">
-              <div class='col-md-6'>
+              <div class='col-md-8'>
                 <span class="formLabel">Start Time:</span>
                 <input id='startInput' class='timeInput' type="text" name="startTime" size = "10">
               </div>
-              <div class='col-md-6'>
+              <div class='col-md-4'>
                 <button id="recordStart" type="button" class="btn btn-info">Record Start Time</button>
               </div>
             </div>
 
             <div class="formField row bottom-buffer">
-              <div class='col-md-6'>
+              <div class='col-md-8'>
                 <span class="formLabel">End Time:</span>
                 <input id='endInput' class='timeInput' type="text" name="endTime" size = "10">
               </div>
-              <div class='col-md-6'>  
+              <div class='col-md-4'>  
                 <button id="recordEnd" type="button" class="btn btn-info">Record End Time</button>
               </div>
             </div>
@@ -159,7 +175,7 @@
             </div>
           </div>
         </div>
-        <div id='historyBox' class='row bottom-buffer col-md-4'>
+        <div id='historyBox' class='row bottom-buffer col-md-3'>
           <h3><u>History:</u></h3>
           <ol id='historyList'>
           </ol>
