@@ -17812,6 +17812,9 @@ const app = feathers().configure(restClient.jquery($));
 const playlist = app.service('/playlist');
 const db = app.service('/mongo');
 const MAX_TRIALS = 30;
+const Experiment_type = $("#objectVersion").length ? 'object' : 'action';
+
+const playlistId = Experiment_type === 'action' ? 'PLm09SE4GxfvWi5dKXkCoXdtJstAgvNHp3' : 'PLm09SE4GxfvUmhC1SU-AH7OKYfwMPrPsn';
 
 function getPlaylist(id, params) {
   return playlist.get(id, params).then(function(message) {
@@ -17844,6 +17847,7 @@ var user = {
   trialVideos: [],
   currentTrial: 0,
   canvasSize: null,
+  experimentType: Experiment_type,
 };
 // Canvas context
 let ctx;
@@ -17881,7 +17885,6 @@ function setupCanvas() {
 
   ctx = canvas.getContext('2d');
   let firstCoord;
-  let secondCoord;
 
   ctx.strokeStyle = '#FF0000';
 
@@ -17892,29 +17895,44 @@ function setupCanvas() {
       return [x, y];
   }
 
-  function mouseDown(event) {
-    clearCanvas();
-    firstCoord = getCursorPosition(event);
-  }
-  function mouseUp(event) {
-    secondCoord = getCursorPosition(event);
+  function strokeBox(event) {
+    const secondCoord = getCursorPosition(event);
     const topLeftX = _.min([firstCoord[0], secondCoord[0]]);
     const topLeftY = _.min([firstCoord[1], secondCoord[1]]);
     const recWidth = _.max([firstCoord[0], secondCoord[0]]) - topLeftX;
     const recHeight = _.max([firstCoord[1], secondCoord[1]]) - topLeftY;
-
-    selectedBox = {
+    
+    ctx.strokeRect(topLeftX, topLeftY, recWidth, recHeight);
+    return {
       topLeftX: topLeftX,
       topLeftY: topLeftY,
       recWidth: recWidth,
       recHeight: recHeight,
       playerTime: player.getCurrentTime(),
     };
-    ctx.strokeRect(topLeftX, topLeftY, recWidth, recHeight);
+  }
+
+  function mouseDown(event) {
+    clearCanvas();
+    firstCoord = getCursorPosition(event);
+  }
+  function mouseUp(event) {
+    if (firstCoord) {
+      selectedBox = strokeBox(event);
+      firstCoord = null;      
+    }
+  }
+  function mouseMove(event) {
+    if (firstCoord) {
+      clearCanvas();
+      strokeBox(event);
+    }
   }
 
   $('#videoCanvas').on('mousedown', mouseDown);
   $('#videoCanvas').on('mouseup', mouseUp);
+  $('#videoCanvas').on('mousemove', mouseMove);
+
 }
 
 $(document).ready(function() {
@@ -17924,7 +17942,7 @@ $(document).ready(function() {
   registerHandlers();
   infoFormHandler();
   setupCanvas();
-  getPlaylist('PLm09SE4GxfvWi5dKXkCoXdtJstAgvNHp3', {
+  getPlaylist(playlistId, {
     query: {
       maxResults: MAX_TRIALS,
     }
@@ -17936,7 +17954,17 @@ $(document).ready(function() {
 function registerHandlers() {
   $('#recordStart').click(() => getPlayerTime($('#startInput')));
   $('#recordEnd').click(() => getPlayerTime($('#endInput')));
-  $('#action').change(showOtherAction);
+  if (Experiment_type === 'action') {
+    $('#action').change(showOtherAction);
+  } else {
+    // $('#objectInput').change(function(){
+    //   console.warn('triggered');
+    //   const defaultText = 'The driver looked at [object] because ...';
+    //   const objectText = defaultText.replace('[object]', $('#objectInput').val());
+    //   $('#why').val(objectText);
+    // });
+  }
+
   $('#addEntry').click(recordEntry);
   $('#deleteEntry').click(deleteEntry);
   $('#submitTrial').click(submitTrial);
@@ -18139,6 +18167,14 @@ function checkEmail() {
       var alertStr = 'Profile exists. Experiment will continue where you left off.'; 
       user = message;
       window.alert(alertStr)
+      if (user.experimentType !== Experiment_type){
+        if (user.experimentType === 'action'){
+          window.alert('You are using the wrong website link. Please go to https://berkeley-video-annotation.herokuapp.com/');
+        } else {
+          window.alert('You are using the wrong website link. Please go to https://berkeley-video-annotation.herokuapp.com/object.html');
+        }
+        return;
+      }
       showPage(3);
     }
   });
@@ -18228,6 +18264,7 @@ module.exports = {
   trialEntries: trialEntries,
   user: user,
   player: player,
+  Experiment_type: Experiment_type,
 }
 
 /***/ }),

@@ -30,7 +30,7 @@
   </head>
   <body>
     <main class="container">
-      
+      <div id='objectVersion'></div>
       <!-- Consent form page-->
       <div id="consent" class="page container">
 
@@ -49,7 +49,7 @@
       <div id="before_start" class="page container">
           <!-- Starting page -->
           <h3><u>Before You Start</u></h3>
-          <p class="spaceText"> Welcome! I am a graduate student in Prof. David Whitney's laboratory. The purpose of this experiment is to use human intelligence to improve state-of-the-art autonomous driving algorithms. During this experiment, you will be asked to watch driving videos and annotate what actions that the driver took and why the driver decided to take that action. You valuable input will be used to train the algorithm so you are basically teaching the machine how to drive! :)</p>
+          <p class="spaceText"> Welcome! I am a graduate student in Prof. David Whitney's laboratory. The purpose of this experiment is to use human intelligence to improve state-of-the-art autonomous driving algorithms. During this experiment, you will be asked to watch driving videos and annotate what objects/locations that the driver looked at (either relevant to driving actions or avoiding danger) and why the driver focused on theses certain spots in the video. You valuable input will be used to train the algorithm so you are basically teaching the machine how to drive! :)</p>
           <p class="spaceText"> <b>GOOGLE CHROME IS REQUIRED.</b> The experiment may not work with other browsers.</p><br />
           <h4>Please read the following instructions carefully: </h4>
           <ul>
@@ -141,29 +141,15 @@
             </div>
 
             <div class="formField row bottom-buffer">
-              <div class='col-md-6'>
-                <span class="formLabel" >Action:</span>
-                <select id='action' name="action">
-                  <option value="none"></option>
-                  <option value="accelerate">Accelerate</option>
-                  <option value="brake">Brake</option>
-                  <option value="coast">Coast</option>
-                  <option value="leftTurn">Left Turn</option>
-                  <option value="rightTurn">Right Turn</option>
-                  <option value="mergeLeft">Merge Left</option>
-                  <option value="mergeRight">Merge Right</option>
-                  <option value="uTurn">U Turn</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              <div class='col-md-6'>
-                <input hidden id='otherAction' type="text" name="otherAction" placeholder='other'>
+              <div class='col-md-12'>
+                <span class="formLabel" >What object:</span>
+                <input id='objectInput' class='objectInput' type="text" name="objectName" size = "30">
               </div>
             </div>
 
             <div class="formField row bottom-buffer col-md-12">
               <span class="formLabel">Why:</span>
-              <textarea id="why" type="text" name="why" rows="6" cols="45" wrap="soft"></textarea>
+              <textarea id="why" type="text" name="why" rows="6" cols="45" wrap="soft">The driver looked at ... because ...</textarea>
             </div>
           </form>
           <div class='row bottom-buffer'> 
