@@ -13,6 +13,13 @@
         overflow: auto;
         margin-top: 5px;
       }
+      #instructionDoc {
+        width: 100%;
+        height: 80%;
+        resize: both;
+        overflow: auto;
+        margin-top: 5px;
+      }
       .bottom-buffer { margin-bottom:10px; }
       .top-buffer { margin-top:10px; }
 
@@ -24,6 +31,9 @@
         z-index: 1;
         top:0;
         left:0;
+      }
+      .spaceText{
+        font-size: 14pt;
       }
 
     </style>
@@ -53,13 +63,13 @@
           <p class="spaceText"> <b>GOOGLE CHROME IS REQUIRED.</b> The experiment may not work with other browsers.</p><br />
           <h4>Please read the following instructions carefully: </h4>
           <ul>
-            <li>There are <span class='totalNumber'> </span> trials/videos in this experiments. It should take about 90 minutes. Please try to finish as many trials as you can.</li>
-            <li>Please pay full attention to the experiment. The quality of the data is very important to us. Pleaes don't use your cell phone or try to multitask while doing the experiment. </li>
-            <li>Please do not close the web page before you finish the experiment. If you accidentally exit the experiment, you can resume the experiment by entering your Berkeley email, and then the program will load your progress and you can continue. </li>
-            <li>Please do finish the whole experiment within <b>24 hours</b> after you signed up.</li>
-            <li>You can receive full credits only if you complete all the trials or participate for the full 60 minutes. </li>
-          </ul><br />
-          <p class="spaceText"> Please send an email to <b>chenzhimin@berkeley.edu</b> with a title <u><b>'Completed Driving Experiment'</b></u> when you finish the whole experiment. We will verify your progress and assign you credits in 1-2 days. If you encountered any problem or have any suggestion, also feel free to contact the researcher. We appreciate your feedback!</p>
+            <li><p class="spaceText">There are <span class='totalNumber'> </span> trials/videos in this experiments. It should take about 90 minutes. Please try to finish as many trials as you can.</p></li>
+            <li><p class="spaceText">Please pay full attention to the experiment. The quality of the data is very important to us. Pleaes don't use your cell phone or try to multi-task while doing the experiment. </p></li>
+            <li><p class="spaceText">Please do not close the web page before you finish the experiment. If you accidentally exit the experiment, you can resume the experiment by entering your Berkeley email, and then the program will load your progress and you can continue. </p></li>
+            <li><p class="spaceText">Please do finish the whole experiment within <b>24 hours</b> after you signed up.</p></li>
+            <li><p class="spaceText">You can receive full credits only if you complete all the trials or participate for the full 90 minutes. </p></li>
+          </ul><br/>
+          <p class="spaceText"> Please send an email to <b>chenzhimin@berkeley.edu</b> with a title <u><b>'Completed Driving Experiment'</b></u> when you finish the whole experiment. We will verify your progress and the time you spent, and assign you credits in 1-2 days. If you encountered any problem or have any suggestion, also feel free to contact the researcher. We appreciate your feedback!</p>
           <p class="spaceText"> Click 'Next' to view the next page. </p>
 
           <!-- Navigation buttons -->
@@ -69,7 +79,7 @@
       <div id="getInfo" class="page container">
         <div class='row bottom-buffer'>
           <h3><u> Participant Information </u></h3>
-          <p>Please enter your Berkeley email as username. Please double check if your email address is correct before you submit. We use it for the purpose of granting RPP credits and saving progress.</p>
+          <p class="spaceText">Please enter your Berkeley email as username. Please double check if your email address is correct before you submit. We use it for the purpose of granting RPP credits and saving progress.</p>
         </div>
         
         <form id='infoForm'>
@@ -95,7 +105,7 @@
           </div>
         </form>
         <div class="row bottom-buffer">
-          <p id = "formText"> Please enter your Driver license ID and confirm that you have at least a year of driving experience. If not, you are not qualified to participate in this experiment and you should sign up for another one (sorry!). Please note that your information is handled as absolutely confedential. </p>
+          <p class="spaceText" id = "formText"> Please enter your Driver license ID and confirm that you have at least a year of driving experience. If not, you are not qualified to participate in this experiment and you should sign up for another one (sorry!). Please note that your information is handled as absolutely confedential. </p>
         </div>
         <button id="submitForm" type="button" class="btn btn-lg btn-primary">Submit</button>
 
@@ -105,9 +115,11 @@
        <!-- Instruction page (show a video instead) -->
         <h3><u>Instructions</u></h3>
         <p class="spaceText"> Please watch the following video for instructions.</p>
-        <p class="spaceText"> (The instruction video will be added soon!)</p>
-        <p class="spaceText"> Click 'Begin' to begin annotating the first video. </p> 
+        <p class="spaceText"> Click 'Begin' to begin annotating the first video when you finish reading the instructions. </p> 
         <button id="begin" type="button" class="btn btn-lg btn-primary">Begin</button>
+        <div class='row bottom-buffer col-md-12'>
+          <iframe frameborder="0" id="instructionDoc" src="https://docs.google.com/document/d/e/2PACX-1vS6NwTOBrLMbUFQ_msrTVabV0gqwG_LQ_2egtwTo0S7Z8jIQOQqbsQC1v6hdAogEFJwQQZN-rcU1LvA/pub?embedded=true"></iframe>
+        </div>
       </div>
 
       <div id="annotation" class="page container">
@@ -187,7 +199,7 @@
       <div id="EndingExp" class="page container">
         <h3><u>You have finished the experiment!</u></h3>
         <p class="spaceText"> Thank you so much!</p>
-        <p class="spaceText"> Please send an email to <b>chenzhimin@berkeley.edu</b> with a title <u><b>'Completed Driving Experiment'</b></u>. We will verify your progress and assign you credits in 1-2 days. If you encountered any problem or have any suggestion, also feel free to contact the researcher. We appreciate your feedback!</p>
+        <p class="spaceText"> Please send an email to <b>chenzhimin@berkeley.edu</b> with a title <u><b>'Completed Driving Experiment'</b></u>. We will verify your progress and the time you spent, and assign you credits in 1-2 days. If you encountered any problem or have any suggestion, also feel free to contact the researcher. We appreciate your feedback!</p>
         <p class="spaceText"> You can close the web page now.</p> 
       </div>
 
