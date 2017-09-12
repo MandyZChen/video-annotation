@@ -17811,7 +17811,7 @@ const restClient = rest();
 const app = feathers().configure(restClient.jquery($));
 const playlist = app.service('/playlist');
 const db = app.service('/mongo');
-const MAX_TRIALS = 30;
+const MAX_TRIALS = 40;
 const Experiment_type = $("#objectVersion").length ? 'object' : 'action';
 
 const playlistId = Experiment_type === 'action' ? 'PLm09SE4GxfvWi5dKXkCoXdtJstAgvNHp3' : 'PLm09SE4GxfvUmhC1SU-AH7OKYfwMPrPsn';
