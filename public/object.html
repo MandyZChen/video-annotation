@@ -13,6 +13,13 @@
         overflow: auto;
         margin-top: 5px;
       }
+      #instructionDoc {
+        width: 100%;
+        height: 80%;
+        resize: both;
+        overflow: auto;
+        margin-top: 5px;
+      }
       .bottom-buffer { margin-bottom:10px; }
       .top-buffer { margin-top:10px; }
 
@@ -25,7 +32,9 @@
         top:0;
         left:0;
       }
-
+      .spaceText{
+        font-size: 14pt;
+      }
     </style>
   </head>
   <body>
@@ -38,7 +47,7 @@
           <h3><u>Consent Form</u></h3>
           <input name="consent" onclick="Entrypoint.disableStart(false)" type="radio" value="yes" /> I agree<br />
           <input name="consent" onclick="Entrypoint.disableStart(true)" type="radio" value="no" /> I don&#39;t agree<br />
-          <p class="spaceText"> Click 'I agree' then click 'Start' to begin. </p>
+          <p class="spaceText"> Click 'I agree' then click 'Start' to begin. This is a 60 minutes online experiment and you will receive 0.5 credit upon completion. </p>
           <button disabled type="button" id="agreeAndStart" onclick="Entrypoint.showPage(1)" class="btn btn-lg btn-primary">Start</button>
         </div>
         <div class='row bottom-buffer col-md-12'>
@@ -49,15 +58,15 @@
       <div id="before_start" class="page container">
           <!-- Starting page -->
           <h3><u>Before You Start</u></h3>
-          <p class="spaceText"> Welcome! I am a graduate student in Prof. David Whitney's laboratory. The purpose of this experiment is to use human intelligence to improve state-of-the-art autonomous driving algorithms. During this experiment, you will be asked to watch driving videos and annotate what objects/locations that the driver looked at (either relevant to driving actions or avoiding danger) and why the driver focused on theses certain spots in the video. You valuable input will be used to train the algorithm so you are basically teaching the machine how to drive! :)</p>
+          <p class="spaceText"> Welcome! I am a graduate student in Prof. David Whitney's laboratory. The purpose of this experiment is to use human intelligence to improve state-of-the-art autonomous driving algorithms. During this experiment, we will show you videos of gaze locations recorded when people were driving on the street. You will be asked to watch driving videos and annotate what objects/locations that the driver looked at (either relevant to driving actions or avoiding danger) and why the driver focused on theses certain spots in the video. You valuable input will be used to train the algorithm so you are basically teaching the machine how to drive! :)</p>
           <p class="spaceText"> <b>GOOGLE CHROME IS REQUIRED.</b> The experiment may not work with other browsers.</p><br />
           <h4>Please read the following instructions carefully: </h4>
           <ul>
-            <li>There are <span class='totalNumber'> </span> trials/videos in this experiments. It should take about 90 minutes. Please try to finish as many trials as you can.</li>
-            <li>Please pay full attention to the experiment. The quality of the data is very important to us. Pleaes don't use your cell phone or try to multitask while doing the experiment. </li>
-            <li>Please do not close the web page before you finish the experiment. If you accidentally exit the experiment, you can resume the experiment by entering your Berkeley email, and then the program will load your progress and you can continue. </li>
-            <li>Please do finish the whole experiment within <b>24 hours</b> after you signed up.</li>
-            <li>You can receive full credits only if you complete all the trials or participate for the full 60 minutes. </li>
+            <li><p class="spaceText">There are <span class='totalNumber'> </span> trials/videos in this experiments. It should take about 60 minutes. Please try to finish as many trials as you can.</p></li>
+            <li><p class="spaceText">Please pay full attention to the experiment. The quality of the data is very important to us. Pleaes don't use your cell phone or try to multitask while doing the experiment. </p></li>
+            <li><p class="spaceText">Please do not close the web page before you finish the experiment. If you accidentally exit the experiment, you can resume the experiment by entering your Berkeley email, and then the program will load your progress and you can continue. </p></li>
+            <li><p class="spaceText">Please do finish the whole experiment within <b>24 hours</b> after you signed up.</p></li>
+            <li><p class="spaceText">You can receive full credits only if you participate for the full 60 minutes or complete all the trials. </p></li>
           </ul><br />
           <p class="spaceText"> Please send an email to <b>chenzhimin@berkeley.edu</b> with a title <u><b>'Completed Driving Experiment'</b></u> when you finish the whole experiment. We will verify your progress and assign you credits in 1-2 days. If you encountered any problem or have any suggestion, also feel free to contact the researcher. We appreciate your feedback!</p>
           <p class="spaceText"> Click 'Next' to view the next page. </p>
@@ -69,7 +78,7 @@
       <div id="getInfo" class="page container">
         <div class='row bottom-buffer'>
           <h3><u> Participant Information </u></h3>
-          <p>Please enter your Berkeley email as username. Please double check if your email address is correct before you submit. We use it for the purpose of granting RPP credits and saving progress.</p>
+          <p class="spaceText">Please enter your Berkeley email as username. Please double check if your email address is correct before you submit. We use it for the purpose of granting RPP credits and saving progress.</p>
         </div>
         
         <form id='infoForm'>
@@ -95,7 +104,7 @@
           </div>
         </form>
         <div class="row bottom-buffer">
-          <p id = "formText"> Please enter your Driver license ID and confirm that you have at least a year of driving experience. If not, you are not qualified to participate in this experiment and you should sign up for another one (sorry!). Please note that your information is handled as absolutely confedential. </p>
+          <p class="spaceText" id = "formText"> Please enter your Driver license ID and confirm that you have at least a year of driving experience. If not, you are not qualified to participate in this experiment and you should sign up for another one (sorry!). Please note that your information is handled as absolutely confedential. </p>
         </div>
         <button id="submitForm" type="button" class="btn btn-lg btn-primary">Submit</button>
 
@@ -105,18 +114,23 @@
        <!-- Instruction page (show a video instead) -->
         <h3><u>Instructions</u></h3>
         <p class="spaceText"> Please watch the following video for instructions.</p>
-        <p class="spaceText"> (The instruction video will be added soon!)</p>
-        <p class="spaceText"> Click 'Begin' to begin annotating the first video. </p> 
+        <p class="spaceText"> Click 'Begin' to begin annotating the first video when you finish reading the instructions.  </p> 
         <button id="begin" type="button" class="btn btn-lg btn-primary">Begin</button>
+        <div class='row bottom-buffer col-md-12'>
+          <iframe frameborder="0" id="instructionDoc" src="https://docs.google.com/document/d/e/2PACX-1vRUvNrDpJ7p9Eq9svwWdF7nC2tXD4j7aNp9x5F7TYBXJvGSJhUA6YbEn6VIerz3NLgu0umPwHeBJVrF/pub?embedded=true"></iframe>
+        </div>
       </div>
 
       <div id="annotation" class="page container">
-        <h3>Trial <span id='trialNumber'></span> out of <span class='totalNumber'> </span> in total</h3>
+        <h3>Trial <span id='trialNumber'></span> out of <span class='totalNumber'> </span> in total</h3> 
         <div id='videoContainer' class='col-md-9'>
           <div id='canvasContainer'>
             <div id='yt-player'></div>
             <canvas id='videoCanvas'></canvas>  
           </div>
+        </div>
+        <div id='instructionsButton' class='row bottom-buffer col-md-3'>
+            <a href="https://docs.google.com/document/d/1dZTT_4aZ4Wbz37eRH-EEWNKRKJY6NPhjy5d5WB_SpgU/edit?usp=sharing" class="btn btn-default" target="_blank">Click here to view instructions again.</a>
         </div>
         <div id='entryBox' class='row bottom-buffer col-md-3'>
           <form id='entryForm'>
